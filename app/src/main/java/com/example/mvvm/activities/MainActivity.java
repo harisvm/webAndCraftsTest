@@ -58,17 +58,31 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Categories");
         mainActivityViewModel = ViewModelProviders.of(MainActivity.this).get(MainActivityViewModel.class);
         Log.v("CONNECTED", String.valueOf(isNetworkConnected()));
+        ProgressDialog mDialog = new ProgressDialog(MainActivity.this);
+        mDialog.setTitle("Please wait");
+        mDialog.show();
         if (isNetworkConnected()) {
+
             mainActivityViewModel.loadCategoriesFromApiAndStore().observe(MainActivity.this, categoryResponse -> {
                 initRecyclerView(categoryResponse);
                 adapter.notifyDataSetChanged();
+                if(mDialog.isShowing()){
+
+                    mDialog.dismiss();
+                }
 
 
             });
 
         } else {
+            if(mDialog.isShowing()){
 
-            Toast.makeText(this, "Showing data from local cache", Toast.LENGTH_SHORT).show();            mainActivityViewModel.loadCategoriesFromDb().observe(MainActivity.this, categoryList -> {
+                mDialog.dismiss();
+            }
+
+
+            Toast.makeText(this, "Showing data from local cache", Toast.LENGTH_SHORT).show();
+            mainActivityViewModel.loadCategoriesFromDb().observe(MainActivity.this, categoryList -> {
 
 
                 initRecyclerView(categoryList);
