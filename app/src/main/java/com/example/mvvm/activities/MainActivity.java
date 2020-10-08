@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.RetrofitService;
 import com.example.mvvm.Interfaces.ApiInterface;
@@ -65,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             });
 
         } else {
-            mainActivityViewModel.loadCategoriesFromDb().observe(MainActivity.this, categoryList -> {
+
+            Toast.makeText(this, "Showing data from local cache", Toast.LENGTH_SHORT).show();            mainActivityViewModel.loadCategoriesFromDb().observe(MainActivity.this, categoryList -> {
 
 
                 initRecyclerView(categoryList);

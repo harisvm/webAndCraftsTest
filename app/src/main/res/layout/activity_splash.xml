@@ -15,7 +15,7 @@
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="MACHINE TEST"></TextView>
+        android:text="Machine Test"></TextView>
 
 
 </LinearLayout>
