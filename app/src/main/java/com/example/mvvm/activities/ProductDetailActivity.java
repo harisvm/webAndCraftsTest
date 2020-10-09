@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.app.PendingIntent.getActivity;
+
 public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.imageDetailView)
     ImageView imageView;
@@ -30,6 +32,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
 
         ButterKnife.bind(this);
+
+
+
 
         //getting data from intent and showing
         Product passedProduct = getIntent().getParcelableExtra("product");
