@@ -30,6 +30,8 @@ public class ProductRepository {
         categoryDb = CategoryDb.getInstance(application);
         categoryDao = categoryDb.categoryDao();
 
+        productListFromDb = categoryDao.getAllCategories();
+
     }
 
     //data from local db
