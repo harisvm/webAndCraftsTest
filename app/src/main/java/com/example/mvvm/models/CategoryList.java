@@ -9,8 +9,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
+//category list model
 @Entity(tableName = "category_table")
 
 public class CategoryList {

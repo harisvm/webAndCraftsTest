@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+//products are attached in to their categories using this adapter
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     List<Product> productsList;
     Context context;
@@ -40,12 +41,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Picasso.get().load(productsList.get(position).getImageUrl()).memoryPolicy(MemoryPolicy.NO_STORE).into(holder.imageView);
 
         holder.productName.setText(productsList.get(position).getTitle());
-        holder.productPrice.setText("₹ " +productsList.get(position).getPrice().toString());
+        holder.productPrice.setText("₹ " + productsList.get(position).getPrice().toString());
         holder.imageView.setOnClickListener(v -> {
 
             Product selectedProduct = productsList.get(position);
 
-            context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("product",selectedProduct));
+            context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("product", selectedProduct));
 
 
         });

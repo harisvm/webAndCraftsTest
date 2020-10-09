@@ -6,8 +6,20 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+//individual product model
 public class Product implements Parcelable {
 
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
     @SerializedName("title")
     @Expose
     private String title;
@@ -31,18 +43,6 @@ public class Product implements Parcelable {
         imageUrl = in.readString();
         description = in.readString();
     }
-
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
-        @Override
-        public Product createFromParcel(Parcel in) {
-            return new Product(in);
-        }
-
-        @Override
-        public Product[] newArray(int size) {
-            return new Product[size];
-        }
-    };
 
     public String getTitle() {
         return title;

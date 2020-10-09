@@ -1,16 +1,11 @@
 package com.example.mvvm.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.example.mvvm.db.Converters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
+//category model
 public class Category {
 
 

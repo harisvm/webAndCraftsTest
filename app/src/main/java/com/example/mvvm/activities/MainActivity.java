@@ -1,47 +1,24 @@
 package com.example.mvvm.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.RetrofitService;
-import com.example.mvvm.Interfaces.ApiInterface;
 import com.example.mvvm.R;
-import com.example.mvvm.adapters.ProductAdapter;
 import com.example.mvvm.adapters.RecyclerAdapter;
-import com.example.mvvm.models.Category;
 import com.example.mvvm.models.CategoryList;
 import com.example.mvvm.viewmodels.MainActivityViewModel;
-import com.github.florent37.expansionpanel.ExpansionLayout;
-import com.github.florent37.expansionpanel.viewgroup.ExpansionLayoutCollection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recycler)
@@ -61,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         ProgressDialog mDialog = new ProgressDialog(MainActivity.this);
         mDialog.setTitle("Please wait");
         mDialog.show();
+
+        //if connected to network - showing data from api - also storing a fresh copy ito local db
         if (isNetworkConnected()) {
 
             mainActivityViewModel.loadCategoriesFromApiAndStore().observe(MainActivity.this, categoryResponse -> {
                 initRecyclerView(categoryResponse);
                 adapter.notifyDataSetChanged();
-                if(mDialog.isShowing()){
+                if (mDialog.isShowing()) {
 
                     mDialog.dismiss();
                 }
@@ -74,12 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
             });
 
-        } else {
-            if(mDialog.isShowing()){
+        }
+
+
+        //if not connected to network - showing data from local db
+        else {
+            if (mDialog.isShowing()) {
 
                 mDialog.dismiss();
             }
-
 
             Toast.makeText(this, "Showing data from local cache", Toast.LENGTH_SHORT).show();
             mainActivityViewModel.loadCategoriesFromDb().observe(MainActivity.this, categoryList -> {
@@ -95,13 +77,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //checking network connection state
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+
+    //passing data in to recyclerview and attaching adapter
     private void initRecyclerView(CategoryList categoryList) {
         adapter.setItems(categoryList.getCategories());
 

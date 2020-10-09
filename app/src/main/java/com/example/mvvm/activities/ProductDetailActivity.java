@@ -1,11 +1,10 @@
 package com.example.mvvm.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mvvm.R;
 import com.example.mvvm.models.Product;
@@ -32,15 +31,14 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        //getting data from intent and showing
         Product passedProduct = getIntent().getParcelableExtra("product");
 
         Picasso.get().load(passedProduct.getImageUrl()).memoryPolicy(MemoryPolicy.NO_STORE).into(imageView);
 
         productName.setText(passedProduct.getTitle());
-        productPrice.setText("₹ " +passedProduct.getPrice().toString());
+        productPrice.setText("₹ " + passedProduct.getPrice().toString());
         productDescription.setText(passedProduct.getDescription());
-
-
 
 
     }

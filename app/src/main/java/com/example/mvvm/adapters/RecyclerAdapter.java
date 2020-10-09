@@ -17,11 +17,11 @@ import com.github.florent37.expansionpanel.viewgroup.ExpansionLayoutCollection;
 import java.util.ArrayList;
 import java.util.List;
 
-public final  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
-    Context context;
-
+//adapter for expansion layout (category list on the main page)
+public final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
     private final ExpansionLayoutCollection expansionsCollection = new ExpansionLayoutCollection();
     private final List<Category> categoryList = new ArrayList();
+    Context context;
 
 
     public RecyclerAdapter(Context context) {
@@ -45,13 +45,12 @@ public final  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter
         if (categoryList.get(position).getProducts() != null) {
             for (int i = 0; i < categoryList.get(position).getProducts().size(); i++) {
                 ProductAdapter productAdapter = new ProductAdapter(categoryList.get(position).getProducts(), context);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2, RecyclerView.HORIZONTAL,false);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false);
 
 
                 holder.gridView.setLayoutManager(gridLayoutManager);
                 holder.gridView.setHasFixedSize(true);
                 holder.gridView.setAdapter(productAdapter);
-
 
 
             }
@@ -75,15 +74,9 @@ public final  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter
     public final static class RecyclerHolder extends RecyclerView.ViewHolder {
 
         private static final int LAYOUT = R.layout.individual_item;
-
-        public static RecyclerAdapter.RecyclerHolder buildFor(ViewGroup viewGroup) {
-            return new RecyclerAdapter.RecyclerHolder(LayoutInflater.from(viewGroup.getContext()).inflate(LAYOUT, viewGroup, false));
-        }
-
         ExpansionLayout expansionLayout;
         TextView title;
         RecyclerView gridView;
-
         public RecyclerHolder(View itemView) {
             super(itemView);
             expansionLayout = itemView.findViewById(R.id.expansionLayout);
@@ -92,6 +85,10 @@ public final  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter
             gridView = itemView.findViewById(R.id.gridView);
 
 
+        }
+
+        public static RecyclerAdapter.RecyclerHolder buildFor(ViewGroup viewGroup) {
+            return new RecyclerAdapter.RecyclerHolder(LayoutInflater.from(viewGroup.getContext()).inflate(LAYOUT, viewGroup, false));
         }
 
         public void bind(Object object) {
